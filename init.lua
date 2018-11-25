@@ -68,7 +68,7 @@ function cc_attack_check()
         local CCseconds=tonumber(string.match(config_cc_rate,'/(.*)'))
         local req,_ = limit:get(CC_TOKEN)
         if req then
-            --write('/data/wwwlogs/info.log',CC_TOKEN ..'\t'.. ATTACK_URL .. '\t'.. 'req: ' .. req .. "\n")
+            -- write('/data/wwwlogs/info.log',CC_TOKEN ..'\t'.. ATTACK_URL .. '\t'.. 'req: ' .. req .. "\n")
             if req > CCcount then
                 log_record('CC_Attack',ngx.var.request_uri,"-","-")
                 if config_waf_enable == "on" then
@@ -130,9 +130,9 @@ function url_args_attack_check()
             local REQ_ARGS = ngx.req.get_uri_args()
             for key, val in pairs(REQ_ARGS) do
                 if type(val) == 'table' then
-                    ARGS_DATA = table.concat(val, " ")
+                    local ARGS_DATA = table.concat(val, " ")
                 else
-                    ARGS_DATA = val
+                    local ARGS_DATA = val
                 end
                 if ARGS_DATA and type(ARGS_DATA) ~= "boolean" and rule ~="" and rulematch(unescape(ARGS_DATA),rule,"jo") then
                     log_record('Deny_URL_Args',ngx.var.request_uri,"-",rule)
